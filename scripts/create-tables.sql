@@ -1,0 +1,51 @@
+CREATE TABLE Groups (
+   Id INT IDENTITY (1, 1),
+   Name VARCHAR (MAX),
+   PRIMARY KEY (Id)
+);
+
+CREATE TABLE Users (
+   Id INT IDENTITY (1, 1),
+   Name VARCHAR (MAX),
+   GroupId INT,
+   PRIMARY KEY (Id)
+);
+
+CREATE TABLE Subscriptions (
+   Id INT IDENTITY (1, 1),
+   Endpoint TEXT,
+   ExpirationTime VARCHAR (MAX),
+   P256dh TEXT,
+   Auth TEXT,
+   RegisteredAt DATETIMEOFFSET,
+   UserId INT,
+   PRIMARY KEY (Id)
+);
+
+CREATE TABLE Notifications (
+   Id INT IDENTITY (1, 1),
+   Title VARCHAR (MAX),
+   Message TEXT,
+   Ts DATETIMEOFFSET,
+   GroupId INT,
+   PRIMARY KEY (Id)
+);
+
+
+ALTER TABLE Users 
+ADD CONSTRAINT FK_User_Group 
+FOREIGN KEY (GroupId) 
+REFERENCES Groups(Id) 
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE Subscriptions 
+ADD CONSTRAINT FK_Subscription_User 
+FOREIGN KEY (UserId) 
+REFERENCES Users(Id) 
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE Notifications 
+ADD CONSTRAINT FK_Notification_Group 
+FOREIGN KEY (GroupId) 
+REFERENCES Groups(Id) 
+ON DELETE CASCADE ON UPDATE CASCADE;

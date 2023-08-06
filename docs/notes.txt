@@ -1,0 +1,25 @@
+VAPIDKeys:
+{
+  publicKey: 'BOAZ6XA6efCcT6WVjH1E6AQWRNhtpxHWEqSX_fL460AQLaQkEDb4akdpapbr_yIGG3fVZLhk4DejYM-XPitIWko',
+  privateKey: 'x1F41mAFcOPflpgv-4QVf9uWYCqZgLH9KU_pHcunNiY'
+}
+
+Chrome
+{
+    "endpoint":"https://fcm.googleapis.com/fcm/send/fXpCivlW3DU:APA91bGQpG9degNlFzkWz_hRHqS_ZGmVbkbfyo7xBDZCrE-kml06-WPNqoSxcc6GJK4YyuBLBLXHrZPW-UqBgsbOipMDt5SGs8v1ctiUV-m4BA3gayuOleLlpCPj_CCY381VDpbRfm7D",
+    "expirationTime":null,
+    "keys":{
+        "p256dh":"BAc6kLlA8_1iNCXGYOuxQOl7v4Id6Yul9XrXawYHpVeNVw_5gDSvvk95tZaAnT6HkhpdAOT7JU3piL8jLIEH4os",
+        "auth":"04SwkKKmMk3sYB8jrj8IJg"
+    }
+}
+
+Edge
+{
+    "endpoint":"https://wns2-bn3p.notify.windows.com/w/?token=BQYAAACL8wnO%2bn8d%2flPo%2b91p%2bIhNM7QaPH2PYkyGlJiZvKB%2ftfCtiDU9gMUV4smYeeA%2fhRji2rIEs1FcgwOwr7nyhZb%2bO2uQLqkLSqnEPx%2fp15S6ArozRjcvQXOanbdDY8jXX9Jp%2b69P3exr71cRp4eNazaJCUWkQwIgQCJCJdmlHhUJ8Dv2rQuM95h4eehPEGGH0uOefbMGjouPqQIXjmHyU4KNy0j%2flK8P%2bie4aNoEQwFGzZQy6F7PFq4PJqEKeL3LVe3inHS21FbcpTVIVcUkdRPJlH43J%2bAnRirxTE0WFb32LpbbeCl6sHjJYwgjKyrJ4yE%3d",
+    "expirationTime":null,
+    "keys":{
+        "p256dh":"BHklPUiA53jpWhtwwyZyE4qyCfHYiE_HfLD85_MnpZKZJA7jXlu8ltUx8pIk3XRRrO4w_l49iTPTyAfhFbd_vT0",
+        "auth":"ksK_ZmApSQAfdY-8GWmJlQ"
+    }
+}
