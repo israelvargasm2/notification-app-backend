@@ -2,23 +2,23 @@ const webpush = require('web-push');
 const SqlServerService = require('./sql-server-service.js');
 
 class PushNotificationsService {
-    vapidKeys = {
-        "publicKey": "BOAZ6XA6efCcT6WVjH1E6AQWRNhtpxHWEqSX_fL460AQLaQkEDb4akdpapbr_yIGG3fVZLhk4DejYM-XPitIWko",
-        "privateKey": "x1F41mAFcOPflpgv-4QVf9uWYCqZgLH9KU_pHcunNiY"
-    };
-
-    options = {
-        vapidDetails: {
-            subject: 'mailto:example@yourdomain.org',
-            publicKey: this.vapidKeys.publicKey,
-            privateKey: this.vapidKeys.privateKey
-        },
-        TTL: 60
-    };
 
     constructor(title, message) {
+        this.vapidKeys = {
+            publicKey: "BOAZ6XA6efCcT6WVjH1E6AQWRNhtpxHWEqSX_fL460AQLaQkEDb4akdpapbr_yIGG3fVZLhk4DejYM-XPitIWko",
+            privateKey: "x1F41mAFcOPflpgv-4QVf9uWYCqZgLH9KU_pHcunNiY"
+        };
+        this.options = {
+            vapidDetails: {
+                subject: 'mailto:example@yourdomain.org',
+                publicKey: this.vapidKeys.publicKey,
+                privateKey: this.vapidKeys.privateKey
+            },
+            TTL: 60
+        };
         this.title = title;
         this.message = message;
+        this.sql = new SqlServerService();
     }
 
     getSubscriptions() {
@@ -29,7 +29,7 @@ class PushNotificationsService {
                 keys: {
                     p256dh: 'BAc6kLlA8_1iNCXGYOuxQOl7v4Id6Yul9XrXawYHpVeNVw_5gDSvvk95tZaAnT6HkhpdAOT7JU3piL8jLIEH4os',
                     auth: '04SwkKKmMk3sYB8jrj8IJg'
-                    
+
                 }
             }
         ];
@@ -64,9 +64,17 @@ class PushNotificationsService {
         return payload;
     }
 
-    sendNotification() {
-        const sql = new SqlServerService();
-        sql.select('SELECT * FROM Subscriptions').then(res => {
+    sendNotification(groupIds) {
+        let query = `SELECT * FROM Subscriptions s JOIN Users u ON s.UserId = u.Id JOIN Groups g ON u.GroupId = g.Id WHERE g.Id = ${groupIds[0]}`;
+        if (groupIds.length > 1) {
+            for (let i=1; i < groupIds.length; i++) {
+                query += ` OR g.Id = ${groupIds[i]}`;
+            }
+        }
+
+        console.log(query)
+
+        this.sql.select(query).then(res => {
             const results = res.recordset.map(res => [
                 {
                     endpoint: res.Endpoint,
@@ -77,7 +85,7 @@ class PushNotificationsService {
                     }
                 }
             ]);
-            
+
             let subscriptions = [];
 
             for (let result of results) {
@@ -95,13 +103,10 @@ class PushNotificationsService {
                 });
         });
     }
+
     generateVAPIDKeys() {
         console.log(webpush.generateVAPIDKeys());
     }
 }
-
-
-
-
 
 module.exports = PushNotificationsService;

@@ -18,8 +18,16 @@ class SqlServerService {
         try {
             await sql.connect(this.config);
             const result = await sql.query(query);
-            //console.dir(result.recordset);
             return result;
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    async insert(query) {
+        try {
+            await sql.connect(this.config);
+            await sql.query(query);
         } catch (err) {
             console.error(err);
         }
